@@ -9,27 +9,48 @@ namespace OnTopReplica.Native {
     /// </summary>
     static class WindowManagerMethods {
 
+        /// <summary>
+        /// Retrieves a handle to the foreground window (the window with which the user is currently working).
+        /// </summary>
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
+        /// <summary>
+        /// Retrieves a handle to the child window at the specified point.
+        /// </summary>
         [DllImport("user32.dll")]
         public static extern IntPtr RealChildWindowFromPoint(IntPtr parent, NPoint point);
 
+        /// <summary>
+        /// An application-defined callback function used with the EnumWindows or EnumDesktopWindows function.
+        /// </summary>
         [return: MarshalAs(UnmanagedType.Bool)]
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
+        /// <summary>
+        /// Enumerates all top-level windows on the screen by passing the handle to each window, in turn, to an application-defined callback function.
+        /// </summary>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
+        /// <summary>
+        /// Enumerates the child windows that belong to the specified parent window by passing the handle to each child window, in turn, to an application-defined callback function.
+        /// </summary>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumChildWindows(IntPtr hWnd, EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
+        /// <summary>
+        /// Determines the visibility state of the specified window.
+        /// </summary>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindowVisible(IntPtr hWnd);
 
+        /// <summary>
+        /// Retrieves a handle to the desktop window.
+        /// </summary>
         [DllImport("user32.dll")]
         public static extern IntPtr GetDesktopWindow();
 
@@ -69,15 +90,27 @@ namespace OnTopReplica.Native {
                 return new NPoint();
         }
 
+        /// <summary>
+        /// Retrieves a handle to the parent or owner of the specified window.
+        /// </summary>
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetParent(IntPtr hWnd);
 
+        /// <summary>
+        /// Changes the parent window of the specified child window.
+        /// </summary>
         [DllImport("User32", CharSet = CharSet.Auto)]
         public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndParent);
 
+        /// <summary>
+        /// Brings the thread that created the specified window into the foreground and activates the window.
+        /// </summary>
         [DllImport("user32.dll", SetLastError = false)]
         public static extern bool SetForegroundWindow(IntPtr hwnd);
 
+        /// <summary>
+        /// Window retrieval flags.
+        /// </summary>
         public enum GetWindowMode : uint {
             GW_HWNDFIRST = 0,
             GW_HWNDLAST = 1,
@@ -88,6 +121,9 @@ namespace OnTopReplica.Native {
             GW_ENABLEDPOPUP = 6
         }
 
+        /// <summary>
+        /// Retrieves a handle to a window that has the specified relationship (Z-Order or owner) to the specified window.
+        /// </summary>
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindow(IntPtr hwnd, GetWindowMode mode);
 
@@ -102,6 +138,9 @@ namespace OnTopReplica.Native {
             return (!hasParent && !hasOwner);
         }
 
+        /// <summary>
+        /// Retrieves a handle to the top-level window whose class name and window name match the specified strings.
+        /// </summary>
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string className, string windowName);
     }

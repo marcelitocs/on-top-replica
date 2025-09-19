@@ -11,10 +11,16 @@ using System.IO;
 using WindowsFormsAero;
 
 namespace OnTopReplica.SidePanels {
+    /// <summary>
+    /// Contents of the about panel.
+    /// </summary>
     public partial class AboutPanelContents : UserControl {
 
         EventHandler<UpdateCheckCompletedEventArgs> _updateHandler;
 
+        /// <summary>
+        /// Creates a new instance of the about panel contents.
+        /// </summary>
         public AboutPanelContents() {
             InitializeComponent();
 
@@ -38,6 +44,9 @@ namespace OnTopReplica.SidePanels {
             linkContribute.Internationalize(Strings.AboutContribute, Strings.AboutContributeContent);
         }
 
+        /// <summary>
+        /// Overridden. Registers for update check events.
+        /// </summary>
         protected override void OnHandleCreated(EventArgs e) {
             base.OnHandleCreated(e);
 
@@ -48,6 +57,9 @@ namespace OnTopReplica.SidePanels {
             }
         }
 
+        /// <summary>
+        /// Overridden. Unregisters from update check events.
+        /// </summary>
         protected override void OnHandleDestroyed(EventArgs e) {
             base.OnHandleDestroyed(e);
 

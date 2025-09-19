@@ -6,11 +6,26 @@ using System.Windows.Forms;
 
 namespace OnTopReplica.Native {
 
+    /// <summary>
+    /// Hotkey modifier keys.
+    /// </summary>
     [Flags]
     public enum HotKeyModifiers : int {
+        /// <summary>
+        /// Alt key.
+        /// </summary>
         Alt = 0x1,
+        /// <summary>
+        /// Control key.
+        /// </summary>
         Control = 0x2,
+        /// <summary>
+        /// Shift key.
+        /// </summary>
         Shift = 0x4,
+        /// <summary>
+        /// Windows key.
+        /// </summary>
         Windows = 0x8
     }
 
@@ -19,6 +34,9 @@ namespace OnTopReplica.Native {
     /// </summary>
     static class HotKeyMethods {
 
+        /// <summary>
+        /// Sent when the user presses a hot key registered by the RegisterHotKey function.
+        /// </summary>
         public const int WM_HOTKEY = 0x312;
 
         [DllImport("user32.dll")]

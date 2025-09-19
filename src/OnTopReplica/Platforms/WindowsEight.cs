@@ -6,6 +6,9 @@ using System.Windows.Forms;
 using OnTopReplica.Native;
 
 namespace OnTopReplica.Platforms {
+    /// <summary>
+    /// Platform support for Windows 8.
+    /// </summary>
     class WindowsEight : WindowsSeven {
 
     }

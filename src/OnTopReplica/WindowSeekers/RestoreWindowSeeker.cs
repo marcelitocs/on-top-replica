@@ -10,16 +10,31 @@ namespace OnTopReplica.WindowSeekers {
     /// </summary>
     class RestoreWindowSeeker : PointBasedWindowSeeker {
 
+        /// <summary>
+        /// Creates a new instance of the seeker.
+        /// </summary>
+        /// <param name="handle">The handle of the window to restore.</param>
+        /// <param name="title">The title of the window to restore.</param>
+        /// <param name="className">The class name of the window to restore.</param>
         public RestoreWindowSeeker(IntPtr handle, string title, string className){
             Handle = handle;
             Title = title;
             Class = className;
         }
 
+        /// <summary>
+        /// Gets the handle of the window to restore.
+        /// </summary>
         public IntPtr Handle { get; private set; }
 
+        /// <summary>
+        /// Gets the title of the window to restore.
+        /// </summary>
         public string Title { get; private set; }
 
+        /// <summary>
+        /// Gets the class name of the window to restore.
+        /// </summary>
         public string Class { get; private set; }
 
         protected override int EvaluatePoints(WindowHandle handle) {

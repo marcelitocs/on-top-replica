@@ -5,12 +5,22 @@ using System.Windows.Forms;
 using System.Drawing;
 
 namespace OnTopReplica {
+    /// <summary>
+    /// A combo box that can display images.
+    /// </summary>
     class ImageComboBox : ComboBox {
 
+        /// <summary>
+        /// Creates a new instance of the image combo box.
+        /// </summary>
         public ImageComboBox() {
             DrawMode = DrawMode.OwnerDrawFixed;
         }
 
+        /// <summary>
+        /// Overridden. Draws the items in the combo box.
+        /// </summary>
+        /// <param name="ea">Draw item event arguments.</param>
         protected override void OnDrawItem(DrawItemEventArgs ea) {
             ea.DrawBackground();
             ea.DrawFocusRectangle();
@@ -40,17 +50,30 @@ namespace OnTopReplica {
             base.OnDrawItem(ea);
         }
 
+        /// <summary>
+        /// Gets or sets the image list to use for the icons.
+        /// </summary>
         public ImageList IconList { get; set; }
 
     }
 
+    /// <summary>
+    /// An item in an image combo box.
+    /// </summary>
     class ImageComboBoxItem {
 
+        /// <summary>
+        /// Creates a new instance of the image combo box item.
+        /// </summary>
         public ImageComboBoxItem() {
             Text = "";
             ImageListIndex = -1;
         }
 
+        /// <summary>
+        /// Creates a new instance of the image combo box item.
+        /// </summary>
+        /// <param name="text">The text to display.</param>
         public ImageComboBoxItem(string text) {
             if (text == null)
                 throw new ArgumentNullException();
@@ -59,6 +82,11 @@ namespace OnTopReplica {
             ImageListIndex = -1;
         }
 
+        /// <summary>
+        /// Creates a new instance of the image combo box item.
+        /// </summary>
+        /// <param name="text">The text to display.</param>
+        /// <param name="imageListIndex">The index of the image in the image list.</param>
         public ImageComboBoxItem(string text, int imageListIndex) {
             if (text == null)
                 throw new ArgumentNullException();
@@ -67,10 +95,19 @@ namespace OnTopReplica {
             ImageListIndex = imageListIndex;
         }
 
+        /// <summary>
+        /// Gets the text to display.
+        /// </summary>
         public string Text { get; private set; }
 
+        /// <summary>
+        /// Gets the index of the image in the image list.
+        /// </summary>
         public int ImageListIndex { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the tag object.
+        /// </summary>
         public object Tag { get; set; }
 
     }

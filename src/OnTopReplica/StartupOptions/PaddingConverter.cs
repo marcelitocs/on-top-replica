@@ -6,6 +6,9 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace OnTopReplica.StartupOptions {
+    /// <summary>
+    /// Type converter for Padding.
+    /// </summary>
     class PaddingConverter : FourValueTypeConverter<Padding> {
 
         protected override Padding CreateValue(int v1, int v2, int v3, int v4) {

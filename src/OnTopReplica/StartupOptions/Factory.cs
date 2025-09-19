@@ -9,6 +9,9 @@ using OnTopReplica.WindowSeekers;
 using System.Windows.Forms;
 
 namespace OnTopReplica.StartupOptions {
+    /// <summary>
+    /// Factory for creating Options objects from settings and command line arguments.
+    /// </summary>
     class Factory {
 
         static Factory() {
@@ -19,6 +22,11 @@ namespace OnTopReplica.StartupOptions {
             TypeDescriptor.AddAttributes(typeof(Padding), new TypeConverterAttribute(typeof(PaddingConverter)));
         }
 
+        /// <summary>
+        /// Creates a new Options object from settings and command line arguments.
+        /// </summary>
+        /// <param name="args">The command line arguments.</param>
+        /// <returns>A new Options object.</returns>
         public static Options CreateOptions(string[] args) {
             var options = new Options();
 

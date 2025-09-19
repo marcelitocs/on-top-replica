@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace OnTopReplica.StartupOptions {
 
+    /// <summary>
+    /// Type converter for Rectangle.
+    /// </summary>
     class RectangleConverter : FourValueTypeConverter<Rectangle> {
 
         protected override Rectangle CreateValue(int v1, int v2, int v3, int v4) {

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 
 namespace OnTopReplica {
+    /// <summary>
+    /// Simple logger.
+    /// </summary>
     static class Log {
 
         const string LogFileName = "lastrun.log.txt";
@@ -31,26 +34,57 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Writes a message to the log.
+        /// </summary>
+        /// <param name="message">The message to write.</param>
         public static void Write(string message) {
             WriteLine(message);
         }
 
+        /// <summary>
+        /// Writes a formatted message to the log.
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="arg0">The first argument.</param>
         public static void Write(string format, object arg0) {
             WriteLine(string.Format(format, arg0));
         }
 
+        /// <summary>
+        /// Writes a formatted message to the log.
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="arg0">The first argument.</param>
+        /// <param name="arg1">The second argument.</param>
         public static void Write(string format, object arg0, object arg1) {
             WriteLine(string.Format(format, arg0, arg1));
         }
 
+        /// <summary>
+        /// Writes a formatted message to the log.
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The arguments.</param>
         public static void Write(string format, params object[] args) {
             WriteLine(string.Format(format, args));
         }
 
+        /// <summary>
+        /// Writes a message with details to the log.
+        /// </summary>
+        /// <param name="caption">The caption.</param>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The arguments.</param>
         public static void WriteDetails(string caption, string format, params object[] args) {
             WriteLines(caption, string.Format(format, args));
         }
 
+        /// <summary>
+        /// Writes an exception to the log.
+        /// </summary>
+        /// <param name="message">The message to write.</param>
+        /// <param name="exception">The exception to write.</param>
         public static void WriteException(string message, Exception exception) {
             if (exception != null) {
                 WriteLines(message, exception.ToString());
@@ -99,6 +133,9 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Gets the queue of log entries.
+        /// </summary>
         public static IEnumerable<string> Queue {
             get {
                 return _entriesQueue;

@@ -9,6 +9,9 @@ using OnTopReplica.Native;
 
 namespace OnTopReplica {
 
+    /// <summary>
+    /// Panel that hosts a DWM thumbnail.
+    /// </summary>
     class ThumbnailPanel : Panel {
 
         //DWM Thumbnail stuff
@@ -17,6 +20,9 @@ namespace OnTopReplica {
         //Labels
         WindowsFormsAero.ThemeLabel _labelGlass;
 
+        /// <summary>
+        /// Creates a new instance of the thumbnail panel.
+        /// </summary>
         public ThumbnailPanel() {
             InitFormComponents();
         }
@@ -179,11 +185,17 @@ namespace OnTopReplica {
 
         #region GUI event handling
 
+        /// <summary>
+        /// Overridden. Updates the thumbnail when the control is resized.
+        /// </summary>
         protected override void OnResize(EventArgs eventargs) {
             base.OnResize(eventargs);
             UpdateThubmnail();
         }
 
+        /// <summary>
+        /// Overridden. Handles hit testing to make the panel transparent to mouse clicks when not in a special mode.
+        /// </summary>
         protected override void WndProc(ref Message m) {
             base.WndProc(ref m);
 
@@ -296,10 +308,22 @@ namespace OnTopReplica {
         Point _regionStartPoint;
         Point _regionLastPoint;
 
+        /// <summary>
+        /// Delegate for the RegionDrawn event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="region">The region that has been drawn.</param>
         public delegate void RegionDrawnHandler(object sender, ThumbnailRegion region);
 
+        /// <summary>
+        /// Fired when a region has been drawn by the user.
+        /// </summary>
         public event RegionDrawnHandler RegionDrawn;
 
+        /// <summary>
+        /// Raises the RegionDrawn event.
+        /// </summary>
+        /// <param name="region">The region that has been drawn.</param>
         protected virtual void OnRegionDrawn(Rectangle region) {
             //Fix region if necessary (bug report by Gunter, via comment)
             if (region.Width < MinimumRegionSize)
@@ -347,6 +371,9 @@ namespace OnTopReplica {
             OnRegionDrawn(final);
         }
 
+        /// <summary>
+        /// Overridden. Starts drawing a region when the user clicks on the panel.
+        /// </summary>
         protected override void OnMouseDown(MouseEventArgs e) {
             if (DrawMouseRegions && e.Button == MouseButtons.Left) {
                 //Start new region drawing
@@ -360,6 +387,9 @@ namespace OnTopReplica {
             base.OnMouseDown(e);
         }
 
+        /// <summary>
+        /// Overridden. Finishes drawing a region when the user releases the mouse button.
+        /// </summary>
         protected override void OnMouseUp(MouseEventArgs e) {
             if (DrawMouseRegions && e.Button == MouseButtons.Left) {
                 //Region completed
@@ -373,6 +403,9 @@ namespace OnTopReplica {
             base.OnMouseUp(e);
         }
 
+        /// <summary>
+        /// Overridden. Suspends region drawing when the mouse leaves the panel.
+        /// </summary>
         protected override void OnMouseLeave(EventArgs e) {
             _drawingSuspended = true;
 
@@ -381,6 +414,9 @@ namespace OnTopReplica {
             base.OnMouseLeave(e);
         }
 
+        /// <summary>
+        /// Overridden. Resumes region drawing when the mouse enters the panel.
+        /// </summary>
         protected override void OnMouseEnter(EventArgs e) {
             _drawingSuspended = false;
 
@@ -389,6 +425,9 @@ namespace OnTopReplica {
             base.OnMouseEnter(e);
         }
 
+        /// <summary>
+        /// Overridden. Updates the region drawing when the mouse moves.
+        /// </summary>
         protected override void OnMouseMove(MouseEventArgs e) {
             if (_drawingRegion && e.Button == MouseButtons.Left) {
                 //Continue drawing
@@ -408,6 +447,9 @@ namespace OnTopReplica {
 
         readonly static Pen RedPen = new Pen(Color.FromArgb(255, Color.Red), 1.5f); //TODO: check width
 
+        /// <summary>
+        /// Overridden. Paints the region selection rectangle and crosshairs.
+        /// </summary>
         protected override void OnPaint(PaintEventArgs e) {
             if (_drawingRegion) {
                 //Is currently drawing, show rectangle
@@ -431,6 +473,9 @@ namespace OnTopReplica {
 
         #region Thumbnail clone click
 
+        /// <summary>
+        /// Overridden. Raises the CloneClick event when the user clicks on the thumbnail.
+        /// </summary>
         protected override void OnMouseClick(MouseEventArgs e) {
             base.OnMouseClick(e);
 
@@ -443,6 +488,9 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Overridden. Raises the CloneClick event when the user double-clicks on the thumbnail.
+        /// </summary>
         protected override void OnMouseDoubleClick(MouseEventArgs e) {
             base.OnMouseDoubleClick(e);
 
@@ -460,6 +508,12 @@ namespace OnTopReplica {
         /// </summary>
         public event EventHandler<CloneClickEventArgs> CloneClick;
 
+        /// <summary>
+        /// Raises the CloneClick event.
+        /// </summary>
+        /// <param name="location">The location of the click in thumbnail coordinates.</param>
+        /// <param name="buttons">The mouse buttons that were pressed.</param>
+        /// <param name="doubleClick">Whether the click was a double-click.</param>
         protected virtual void OnCloneClick(Point location, MouseButtons buttons, bool doubleClick){
             var evt = CloneClick;
             if(evt != null)

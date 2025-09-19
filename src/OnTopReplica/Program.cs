@@ -8,11 +8,20 @@ using OnTopReplica.StartupOptions;
 using OnTopReplica.Update;
 
 namespace OnTopReplica {
-    
+
+    /// <summary>
+    /// Main class of the application. Handles program entry, startup and shutdown.
+    /// </summary>
     static class Program {
 
+        /// <summary>
+        /// Gets the platform support module.
+        /// </summary>
         public static PlatformSupport Platform { get; private set; }
 
+        /// <summary>
+        /// Gets the update manager.
+        /// </summary>
         public static UpdateManager Update { get; private set; }
 
         static MainForm _mainForm;
@@ -20,6 +29,7 @@ namespace OnTopReplica {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// <param name="args">Command line arguments.</param>
         [STAThread]
         static void Main(string[] args) {
             try {
@@ -106,7 +116,10 @@ namespace OnTopReplica {
 
         /// <summary>
         /// Callback detecting application idle time.
+        /// Kicks off the update manager.
         /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         static void Application_Idle(object sender, EventArgs e) {
             Application.Idle -= _handlerIdleUpdater;
 
@@ -117,7 +130,10 @@ namespace OnTopReplica {
 
         /// <summary>
         /// Callback that handles update checking.
+        /// Informs the user if a new version is available.
         /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         static void UpdateManager_CheckCompleted(object sender, UpdateCheckCompletedEventArgs e) {
             if (e.Success && e.Information != null) {
                 Log.Write("Update check successful (latest version is {0})", e.Information.LatestVersion);
@@ -131,6 +147,12 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Global unhandled exception handler.
+        /// Writes a crash dump and informs the user.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
             Log.WriteException("Unhandled exception", e.ExceptionObject as Exception);
 

@@ -35,6 +35,17 @@ Get the [latest version](https://github.com/LorenzCK/OnTopReplica/releases) fr
 
 Submitting [issues](https://github.com/LorenzCK/OnTopReplica/issues) and other feedback is also appreciated.
 
+### Building from Source
+
+To build OnTopReplica from source, you will need:
+
+*   Visual Studio 2017 or later.
+*   .NET Framework 4.7 SDK.
+
+Simply open the `src/OnTopReplica.sln` solution file in Visual Studio and build the solution.
+
+**Note:** The project uses some C# 7.0 features, so you will need a compiler that supports them.
+
 ### Roadmap
 
 1. ✅&nbsp;Update to the newest [WindowsFormsAero](https://github.com/LorenzCK/WindowsFormsAero) version.

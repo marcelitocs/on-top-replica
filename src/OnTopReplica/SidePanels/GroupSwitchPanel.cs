@@ -5,7 +5,13 @@ using OnTopReplica.MessagePumpProcessors;
 using OnTopReplica.WindowSeekers;
 
 namespace OnTopReplica.SidePanels {
+    /// <summary>
+    /// Side panel for group switch mode.
+    /// </summary>
     partial class GroupSwitchPanel : SidePanel {
+        /// <summary>
+        /// Creates a new instance of the group switch panel.
+        /// </summary>
         public GroupSwitchPanel() {
             InitializeComponent();
 
@@ -18,12 +24,19 @@ namespace OnTopReplica.SidePanels {
             buttonCancel.Text = Strings.GroupSwitchModeDisableButton;
         }
 
+        /// <summary>
+        /// Gets the title of the panel.
+        /// </summary>
         public override string Title {
             get {
                 return Strings.MenuGroupSwitch;
             }
         }
 
+        /// <summary>
+        /// Overridden. Loads the window list when the panel is first shown.
+        /// </summary>
+        /// <param name="form">The main form.</param>
         public override void OnFirstShown(MainForm form) {
             base.OnFirstShown(form);
 
@@ -57,6 +70,10 @@ namespace OnTopReplica.SidePanels {
             listWindows.SmallImageList = imageList;
         }
 
+        /// <summary>
+        /// Overridden. Enables or disables group switch mode when the panel is closing.
+        /// </summary>
+        /// <param name="form">The main form.</param>
         public override void OnClosing(MainForm form) {
             base.OnClosing(form);
 

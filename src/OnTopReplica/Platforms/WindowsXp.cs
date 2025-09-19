@@ -4,6 +4,9 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace OnTopReplica.Platforms {
+    /// <summary>
+    /// Platform support for Windows XP.
+    /// </summary>
     class WindowsXp : PlatformSupport {
         
         public override bool CheckCompatibility() {

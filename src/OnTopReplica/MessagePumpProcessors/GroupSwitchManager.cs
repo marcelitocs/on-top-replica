@@ -8,7 +8,12 @@ using System.Windows.Forms;
 using OnTopReplica.Native;
 
 namespace OnTopReplica.MessagePumpProcessors {
-    
+
+    /// <summary>
+    /// Manages 'group switch' mode, where OnTopReplica automatically switches the
+    /// thumbnail to the least recently used window in a group of tracked windows
+    /// when another window of said group is activated.
+    /// </summary>
     class GroupSwitchManager : BaseMessagePumpProcessor {
 
         bool _active = false;
@@ -30,6 +35,7 @@ namespace OnTopReplica.MessagePumpProcessors {
         /// <summary>
         /// Initializes the LRU sorted list of window handles.
         /// </summary>
+        /// <param name="handles">Handles to be tracked.</param>
         private void TrackHandles(IList<WindowHandle> handles) {
             _lruHandles = new List<WindowHandleWrapper>(handles.Count);
             var now = DateTime.Now;
@@ -54,8 +60,10 @@ namespace OnTopReplica.MessagePumpProcessors {
         }
 
         /// <summary>
-        /// Processes the message pump.
+        /// Processes the message pump. Looks for window activation messages.
         /// </summary>
+        /// <param name="msg">Message to process.</param>
+        /// <returns>False.</returns>
         public override bool Process(ref Message msg) {
             if (_active && msg.Msg == HookMethods.WM_SHELLHOOKMESSAGE) {
                 int hookCode = msg.WParam.ToInt32();
@@ -70,6 +78,10 @@ namespace OnTopReplica.MessagePumpProcessors {
             return false;
         }
 
+        /// <summary>
+        /// Handles a foreground window change event.
+        /// </summary>
+        /// <param name="activeWindow">Handle of the new foreground window.</param>
         private void HandleForegroundWindowChange(IntPtr activeWindow) {
             //Seek window in tracked handles
             WindowHandleWrapper activated = null;
@@ -95,6 +107,9 @@ namespace OnTopReplica.MessagePumpProcessors {
             Form.SetThumbnail(next.WindowHandle, null);
         }
 
+        /// <summary>
+        /// Called when the processor is shut down.
+        /// </summary>
         protected override void Shutdown() {
             Disable();
         }
@@ -110,11 +125,17 @@ namespace OnTopReplica.MessagePumpProcessors {
 
         #region List sorting stuff
 
+        /// <summary>
+        /// Internal wrapper around a WindowHandle for LRU sorting.
+        /// </summary>
         class WindowHandleWrapper {
             public WindowHandle WindowHandle { get; set; }
             public DateTime LastTimeUsed { get; set; }
         }
 
+        /// <summary>
+        /// Comparer for WindowHandleWrappers that sorts by last time used.
+        /// </summary>
         class LruDateTimeComparer : IComparer<WindowHandleWrapper> {
 
             #region IComparer<WindowHandleWrapper> Members

@@ -8,8 +8,14 @@ using OnTopReplica.Properties;
 using System.Globalization;
 
 namespace OnTopReplica.SidePanels {
+    /// <summary>
+    /// Options side panel.
+    /// </summary>
     partial class OptionsPanel : SidePanel {
 
+        /// <summary>
+        /// Creates a new instance of the options panel.
+        /// </summary>
         public OptionsPanel() {
             InitializeComponent();
 
@@ -28,6 +34,10 @@ namespace OnTopReplica.SidePanels {
             btnClose.Text = Strings.MenuClose;
         }
 
+        /// <summary>
+        /// Overridden. Populates the language combo box and loads hotkey settings.
+        /// </summary>
+        /// <param name="form">The main form.</param>
         public override void OnFirstShown(MainForm form) {
             base.OnFirstShown(form);
 
@@ -43,12 +53,19 @@ namespace OnTopReplica.SidePanels {
             OnRequestClosing();
         }
 
+        /// <summary>
+        /// Gets the title of the panel.
+        /// </summary>
         public override string Title {
             get {
                 return Strings.SettingsTitle;
             }
         }
 
+        /// <summary>
+        /// Overridden. Saves hotkey settings and re-enables the hotkey manager.
+        /// </summary>
+        /// <param name="form">The main form.</param>
         public override void OnClosing(MainForm form) {
             base.OnClosing(form);
 
@@ -62,6 +79,9 @@ namespace OnTopReplica.SidePanels {
 
         #region Language
 
+        /// <summary>
+        /// Wraps a culture with its name and flag icon.
+        /// </summary>
         class CultureWrapper {
             public CultureWrapper(string name, CultureInfo culture, Image img) {
                 Culture = culture;
