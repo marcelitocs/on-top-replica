@@ -25,6 +25,17 @@ namespace OnTopReplica.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::OnTopReplica.StoredScenarioArray SavedScenarios {
+            get {
+                return ((global::OnTopReplica.StoredScenarioArray)(this["SavedScenarios"]));
+            }
+            set {
+                this["SavedScenarios"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::OnTopReplica.StoredRegionArray SavedRegions {
             get {
                 return ((global::OnTopReplica.StoredRegionArray)(this["SavedRegions"]));

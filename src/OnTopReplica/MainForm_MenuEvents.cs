@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using OnTopReplica.Properties;
+using OnTopReplica.StartupOptions;
 using WindowsFormsAero.TaskDialog;
 using OnTopReplica.SidePanels;
 
@@ -48,8 +49,89 @@ namespace OnTopReplica {
             Settings.Default.RestoreLastWindow = !Settings.Default.RestoreLastWindow;
         }
 
+        private void Menu_SaveScenario_click(object sender, EventArgs e)
+        {
+            if (CurrentThumbnailWindowHandle == null)
+            {
+                MessageBox.Show("A window must be cloned before saving a scenario.", "OnTopReplica", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string scenarioName;
+            if (InputDialog.Show("Save Scenario", "Enter a name for the scenario:", out scenarioName) == DialogResult.OK)
+            {
+                if (string.IsNullOrWhiteSpace(scenarioName))
+                {
+                    MessageBox.Show("The scenario name cannot be empty.", "OnTopReplica", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var scenario = new StoredScenario
+                {
+                    Name = scenarioName,
+                    WindowTitle = CurrentThumbnailWindowHandle.Title,
+                    WindowClass = CurrentThumbnailWindowHandle.Class,
+                    Region = this.SelectedThumbnailRegion,
+                    Opacity = (byte)(this.Opacity * 255),
+                    IsChromeVisible = this.IsChromeVisible
+                };
+
+                if (Settings.Default.SavedScenarios == null)
+                {
+                    Settings.Default.SavedScenarios = new StoredScenarioArray();
+                }
+
+                Settings.Default.SavedScenarios.Add(scenario);
+                Settings.Default.Save();
+            }
+        }
+
+        private void Menu_ManageScenarios_click(object sender, EventArgs e)
+        {
+            SetSidePanel(new ManageScenariosPanel());
+        }
+
         private void Menu_ClickForwarding_click(object sender, EventArgs e) {
             ClickForwardingEnabled = !ClickForwardingEnabled;
+        }
+
+        private void Menu_LoadScenario_DropDownOpening(object sender, EventArgs e)
+        {
+            menuScenarios.Items.Clear();
+
+            if (Settings.Default.SavedScenarios != null && Settings.Default.SavedScenarios.Count > 0)
+            {
+                foreach (var scenario in Settings.Default.SavedScenarios)
+                {
+                    var item = new ToolStripMenuItem(scenario.Name);
+                    item.Tag = scenario;
+                    item.Click += Menu_LoadScenario_click;
+                    menuScenarios.Items.Add(item);
+                }
+            }
+            else
+            {
+                var emptyItem = new ToolStripMenuItem("(Empty)");
+                emptyItem.Enabled = false;
+                menuScenarios.Items.Add(emptyItem);
+            }
+        }
+
+        private void Menu_LoadScenario_click(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripMenuItem;
+            if (item == null)
+                return;
+
+            var scenario = item.Tag as StoredScenario;
+            if (scenario == null)
+                return;
+
+            var options = scenario.ToOptions();
+            var arguments = Factory.ToCommandLine(options);
+
+            System.Diagnostics.Process.Start(Application.ExecutablePath, arguments);
+            Application.Exit();
         }
 
         private void Menu_ClickThrough_click(object sender, EventArgs e) {
