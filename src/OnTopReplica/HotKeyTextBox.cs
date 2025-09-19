@@ -5,9 +5,15 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace OnTopReplica {
-    
+
+    /// <summary>
+    /// Specialized text box for hotkey input.
+    /// </summary>
     class HotKeyTextBox : TextBox {
 
+        /// <summary>
+        /// Overridden. Sets the text box to read-only.
+        /// </summary>
         protected override void OnCreateControl() {
             ReadOnly = true;
 
@@ -30,6 +36,10 @@ namespace OnTopReplica {
             Keys.Escape
         };
 
+        /// <summary>
+        /// Overridden. Handles key up events to build the hotkey string.
+        /// </summary>
+        /// <param name="e">Key event arguments.</param>
         protected override void OnKeyUp(KeyEventArgs e) {
             if (CancelKeys.Contains(e.KeyCode)) {
                 Text = string.Empty;

@@ -4,6 +4,9 @@ using WindowsFormsAero.Dwm;
 
 namespace OnTopReplica.Platforms {
 
+    /// <summary>
+    /// Platform support for Windows Vista.
+    /// </summary>
     class WindowsVista : PlatformSupport {
         
         public override bool CheckCompatibility() {

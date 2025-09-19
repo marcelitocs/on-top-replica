@@ -12,6 +12,10 @@ namespace OnTopReplica.WindowSeekers {
     /// </remarks>
     class ByTitleWindowSeeker : PointBasedWindowSeeker {
 
+        /// <summary>
+        /// Creates a new instance of the seeker.
+        /// </summary>
+        /// <param name="titleSeekString">Title to look for.</param>
         public ByTitleWindowSeeker(string titleSeekString) {
             if (titleSeekString == null)
                 throw new ArgumentNullException();
@@ -19,6 +23,9 @@ namespace OnTopReplica.WindowSeekers {
             TitleMatch = titleSeekString.Trim().ToLowerInvariant();
         }
 
+        /// <summary>
+        /// Gets the title to look for.
+        /// </summary>
         public string TitleMatch { get; private set; }
 
         protected override int EvaluatePoints(WindowHandle handle) {

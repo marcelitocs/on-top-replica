@@ -23,42 +23,87 @@ namespace OnTopReplica.StartupOptions {
 
         #region Position and size
 
+        /// <summary>
+        /// Gets or sets the start location of the window.
+        /// </summary>
         public Point? StartLocation { get; set; }
 
+        /// <summary>
+        /// Gets or sets the start position lock of the window.
+        /// </summary>
         public ScreenPosition? StartPositionLock { get; set; }
 
+        /// <summary>
+        /// Gets or sets the start size of the window.
+        /// </summary>
         public Size? StartSize { get; set; }
 
+        /// <summary>
+        /// Gets or sets the start width of the window.
+        /// </summary>
         public int? StartWidth { get; set; }
 
+        /// <summary>
+        /// Gets or sets the start height of the window.
+        /// </summary>
         public int? StartHeight { get; set; }
 
         #endregion
 
         #region Window cloning
 
+        /// <summary>
+        /// Gets or sets the window ID to clone.
+        /// </summary>
         public IntPtr? WindowId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the window title to clone.
+        /// </summary>
         public string WindowTitle { get; set; }
 
+        /// <summary>
+        /// Gets or sets the window class to clone.
+        /// </summary>
         public string WindowClass { get; set; }
 
+        /// <summary>
+        /// Gets or sets the region to clone.
+        /// </summary>
         public ThumbnailRegion Region { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether the window to clone must be visible.
+        /// </summary>
         public bool MustBeVisible { get; set; }
 
         #endregion
 
         #region Options
 
+        /// <summary>
+        /// Gets or sets whether to enable click forwarding.
+        /// </summary>
         public bool EnableClickForwarding { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to enable click through.
+        /// </summary>
         public bool EnableClickThrough { get; set; }
 
+        /// <summary>
+        /// Gets or sets the opacity of the window.
+        /// </summary>
         public byte Opacity { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to disable the window chrome.
+        /// </summary>
         public bool DisableChrome { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to start in fullscreen mode.
+        /// </summary>
         public bool Fullscreen { get; set; }
 
         #endregion
@@ -68,6 +113,9 @@ namespace OnTopReplica.StartupOptions {
         StringBuilder _sb = new StringBuilder();
         TextWriter _sbWriter;
 
+        /// <summary>
+        /// Gets or sets the status of the command line parsing.
+        /// </summary>
         public CliStatus Status { get; set; }
 
         /// <summary>
@@ -97,6 +145,10 @@ namespace OnTopReplica.StartupOptions {
 
         #region Application
 
+        /// <summary>
+        /// Applies the options to the main form.
+        /// </summary>
+        /// <param name="form">The main form to apply the options to.</param>
         public void Apply(MainForm form) {
             Log.Write("Applying command line launch parameters");
 

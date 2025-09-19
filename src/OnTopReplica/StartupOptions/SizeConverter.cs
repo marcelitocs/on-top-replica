@@ -7,8 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace OnTopReplica.StartupOptions {
 
+    /// <summary>
+    /// Type converter for Size.
+    /// </summary>
     class SizeConverter : TypeConverter {
 
+        /// <summary>
+        /// Overridden. Converts from a string.
+        /// </summary>
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) {
             if(value != null) {
                 var sVal = value.ToString();
@@ -18,14 +24,23 @@ namespace OnTopReplica.StartupOptions {
                 return base.ConvertFrom(context, culture, value);
         }
 
+        /// <summary>
+        /// Overridden. Returns true if the source type is a string or a Size.
+        /// </summary>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
             return (sourceType == typeof(string) || sourceType == typeof(Size));
         }
 
+        /// <summary>
+        /// Overridden. Returns true if the destination type is a Size or a string.
+        /// </summary>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
             return (destinationType == typeof(Size) || destinationType == typeof(string));
         }
 
+        /// <summary>
+        /// Overridden. Converts to a string or a Size.
+        /// </summary>
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
             if(value == null)
                 return base.ConvertTo(context, culture, value, destinationType);

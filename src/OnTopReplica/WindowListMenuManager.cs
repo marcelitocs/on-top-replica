@@ -16,6 +16,11 @@ namespace OnTopReplica {
         readonly MainForm _owner;
         readonly ContextMenuStrip _windowsMenu;
 
+        /// <summary>
+        /// Creates a new instance of the window list menu manager.
+        /// </summary>
+        /// <param name="owner">The main form that owns this manager.</param>
+        /// <param name="windowsMenu">The context menu strip to manage.</param>
         public WindowListMenuManager(MainForm owner, ContextMenuStrip windowsMenu) {
             _owner = owner;
             _windowsMenu = windowsMenu;

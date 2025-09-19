@@ -56,6 +56,9 @@ namespace OnTopReplica.Native {
                 return String.Empty;
         }
 
+        /// <summary>
+        /// Window long flags.
+        /// </summary>
         public enum WindowLong {
             WndProc = (-4),
             HInstance = (-6),
@@ -66,6 +69,9 @@ namespace OnTopReplica.Native {
             Id = (-12)
         }
 
+        /// <summary>
+        /// Window styles.
+        /// </summary>
         [Flags]
         public enum WindowStyles : long {
             None = 0,
@@ -76,6 +82,9 @@ namespace OnTopReplica.Native {
             Visible = 0x10000000L
         }
 
+        /// <summary>
+        /// Extended window styles.
+        /// </summary>
         [Flags]
         public enum WindowExStyles : long {
             AppWindow = 0x40000,
@@ -86,6 +95,9 @@ namespace OnTopReplica.Native {
             Transparent = 0x20
         }
 
+        /// <summary>
+        /// Retrieves information about the specified window. The function also retrieves the 32-bit (DWORD) value at the specified offset into the extra window memory.
+        /// </summary>
         public static IntPtr GetWindowLong(IntPtr hWnd, WindowLong i) {
             if (IntPtr.Size == 8) {
                 return GetWindowLongPtr64(hWnd, i);
@@ -101,6 +113,9 @@ namespace OnTopReplica.Native {
         [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
         static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, WindowLong nIndex);
 
+        /// <summary>
+        /// Changes an attribute of the specified window. The function also sets the 32-bit (DWORD) value at the specified offset into the extra window memory.
+        /// </summary>
         public static IntPtr SetWindowLong(IntPtr hWnd, WindowLong i, IntPtr dwNewLong) {
             if (IntPtr.Size == 8) {
                 return SetWindowLongPtr64(hWnd, i, dwNewLong);
@@ -120,6 +135,9 @@ namespace OnTopReplica.Native {
 
         const int MaxClassLength = 255;
 
+        /// <summary>
+        /// Retrieves the name of the class to which the specified window belongs.
+        /// </summary>
         public static string GetWindowClass(IntPtr hwnd) {
             var sb = new StringBuilder(MaxClassLength + 1);
             RealGetWindowClass(hwnd, sb, MaxClassLength);
@@ -129,6 +147,9 @@ namespace OnTopReplica.Native {
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         static extern uint RealGetWindowClass(IntPtr hwnd, [Out] StringBuilder lpString, uint maxCount);
 
+        /// <summary>
+        /// Class long flags.
+        /// </summary>
         public enum ClassLong {
             Icon = -14,
             IconSmall = -34
@@ -140,6 +161,9 @@ namespace OnTopReplica.Native {
         [DllImport("user32.dll", EntryPoint = "GetClassLongW")]
         static extern int GetClassLong32(IntPtr hWnd, int nIndex);
 
+        /// <summary>
+        /// Retrieves the specified 32-bit (DWORD) value from the WNDCLASSEX structure associated with the specified window.
+        /// </summary>
         public static IntPtr GetClassLong(IntPtr hWnd, ClassLong i) {
             if (IntPtr.Size == 8) {
                 return GetClassLong64(hWnd, (int)i);
@@ -151,6 +175,9 @@ namespace OnTopReplica.Native {
 
         #endregion
 
+        /// <summary>
+        /// Retrieves a handle to the menu assigned to the specified window.
+        /// </summary>
         [DllImport("user32.dll")]
         public static extern IntPtr GetMenu(IntPtr hwnd);
 

@@ -13,6 +13,10 @@ namespace OnTopReplica.WindowSeekers {
     /// </remarks>
     class ByClassWindowSeeker : PointBasedWindowSeeker {
 
+        /// <summary>
+        /// Creates a new instance of the seeker.
+        /// </summary>
+        /// <param name="className">Class name to look for.</param>
         public ByClassWindowSeeker(string className) {
             if (className == null)
                 throw new ArgumentNullException();
@@ -20,6 +24,9 @@ namespace OnTopReplica.WindowSeekers {
             ClassName = className;
         }
 
+        /// <summary>
+        /// Gets the class name to look for.
+        /// </summary>
         public string ClassName { get; private set; }
 
         protected override int EvaluatePoints(WindowHandle handle) {

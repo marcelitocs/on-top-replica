@@ -7,10 +7,17 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace OnTopReplica {
+    /// <summary>
+    /// Manages the fullscreen state of the main form.
+    /// </summary>
     class FullscreenFormManager {
 
         private readonly MainForm _mainForm;
 
+        /// <summary>
+        /// Creates a new instance of the fullscreen manager.
+        /// </summary>
+        /// <param name="form">The main form to manage.</param>
         public FullscreenFormManager(MainForm form) {
             _mainForm = form;
             IsFullscreen = false;
@@ -20,15 +27,25 @@ namespace OnTopReplica {
         Size _preFullscreenSize;
         FormBorderStyle _preFullscreenBorderStyle;
 
+        /// <summary>
+        /// Gets whether the form is currently in fullscreen mode.
+        /// </summary>
         public bool IsFullscreen {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Switches the form to fullscreen mode.
+        /// </summary>
         public void SwitchFullscreen() {
             SwitchFullscreen(Settings.Default.GetFullscreenMode());
         }
 
+        /// <summary>
+        /// Switches the form to a specific fullscreen mode.
+        /// </summary>
+        /// <param name="mode">The fullscreen mode to switch to.</param>
         public void SwitchFullscreen(FullscreenMode mode) {
             if (IsFullscreen) {
                 MoveToFullscreenMode(mode);
@@ -82,6 +99,9 @@ namespace OnTopReplica {
             _mainForm.Location = location;
         }
 
+        /// <summary>
+        /// Switches the form back from fullscreen mode to its previous state.
+        /// </summary>
         public void SwitchBack() {
             if (!IsFullscreen)
                 return;
@@ -105,6 +125,9 @@ namespace OnTopReplica {
             Program.Platform.OnFormStateChange(_mainForm);
         }
 
+        /// <summary>
+        /// Toggles the fullscreen mode.
+        /// </summary>
         public void Toggle() {
             if (IsFullscreen)
                 SwitchBack();

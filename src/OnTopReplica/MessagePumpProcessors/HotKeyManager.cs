@@ -12,10 +12,16 @@ namespace OnTopReplica.MessagePumpProcessors {
     /// </summary>
     class HotKeyManager : BaseMessagePumpProcessor {
 
+        /// <summary>
+        /// Creates a new instance of the hotkey manager.
+        /// </summary>
         public HotKeyManager() {
             Enabled = true;
         }
 
+        /// <summary>
+        /// Delegate for hotkey handling callbacks.
+        /// </summary>
         delegate void HotKeyHandler();
 
         /// <summary>
@@ -66,12 +72,21 @@ namespace OnTopReplica.MessagePumpProcessors {
 
         Dictionary<int, HotKeyHandlerRegistration> _handlers = new Dictionary<int, HotKeyHandlerRegistration>();
 
+        /// <summary>
+        /// Initializes the hotkey manager. Registers hotkeys from settings.
+        /// </summary>
+        /// <param name="form">Main form.</param>
         public override void Initialize(MainForm form) {
             base.Initialize(form);
 
             RefreshHotkeys();
         }
 
+        /// <summary>
+        /// Processes a Windows message. Looks for hotkey messages.
+        /// </summary>
+        /// <param name="msg">Message to process.</param>
+        /// <returns>True if the message has been handled and should not be processed further.</returns>
         public override bool Process(ref Message msg) {
             if (Enabled && msg.Msg == HotKeyMethods.WM_HOTKEY) {
                 int keyId = msg.WParam.ToInt32();
@@ -84,6 +99,9 @@ namespace OnTopReplica.MessagePumpProcessors {
             return false;
         }
 
+        /// <summary>
+        /// Gets or sets whether hotkeys are enabled.
+        /// </summary>
         public bool Enabled { get; set; }
 
         /// <summary>
@@ -100,6 +118,11 @@ namespace OnTopReplica.MessagePumpProcessors {
             RegisterHandler(Settings.Default.HotKeyShowHide, HotKeyShowHideHandler);
         }
 
+        /// <summary>
+        /// Registers a handler from a specification string.
+        /// </summary>
+        /// <param name="spec">Specification string (e.g. "CTRL+SHIFT+A").</param>
+        /// <param name="handler">Handler to be invoked on hotkey press.</param>
         private void RegisterHandler(string spec, HotKeyHandler handler) {
             if (string.IsNullOrEmpty(spec))
                 return; //this can happen and is allowed => simply don't register
@@ -121,6 +144,9 @@ namespace OnTopReplica.MessagePumpProcessors {
                 _handlers.Add(reg.RegistrationKey, reg);
         }
 
+        /// <summary>
+        /// Clears all registered hotkey handlers.
+        /// </summary>
         private void ClearHandlers() {
             foreach (var hotkey in _handlers) {
                 hotkey.Value.Dispose();
@@ -128,6 +154,9 @@ namespace OnTopReplica.MessagePumpProcessors {
             _handlers.Clear();
         }
 
+        /// <summary>
+        /// Called when the processor is shut down.
+        /// </summary>
         protected override void Shutdown() {
             ClearHandlers();
         }

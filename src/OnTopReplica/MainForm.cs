@@ -13,7 +13,10 @@ using WindowsFormsAero.TaskDialog;
 
 namespace OnTopReplica {
 
-    partial class MainForm : AspectRatioForm {
+    /// <summary>
+    /// Main form of the application.
+    /// </summary>
+    public partial class MainForm : AspectRatioForm {
 
         //GUI elements
         ThumbnailPanel _thumbnailPanel;
@@ -21,10 +24,18 @@ namespace OnTopReplica {
         //Managers
         readonly MessagePumpManager _msgPumpManager = new MessagePumpManager();
         WindowListMenuManager _windowListManager;
+
+        /// <summary>
+        /// Gets the full screen manager instance.
+        /// </summary>
         public FullscreenFormManager FullscreenManager { get; private set; }
 
         Options _startupOptions;
 
+        /// <summary>
+        /// Creates a new instance of the main form.
+        /// </summary>
+        /// <param name="startupOptions">Startup options from the command line.</param>
         public MainForm(Options startupOptions) {
             _startupOptions = startupOptions;
 
@@ -59,6 +70,9 @@ namespace OnTopReplica {
 
         #region Event override
 
+        /// <summary>
+        /// Overridden. Creates the window handle and initializes managers.
+        /// </summary>
         protected override void OnHandleCreated(EventArgs e){
  	        base.OnHandleCreated(e);
 
@@ -77,6 +91,9 @@ namespace OnTopReplica {
             Program.Platform.PostHandleFormInit(this);
         }
 
+        /// <summary>
+        /// Overridden. Applies startup options after the form has been shown.
+        /// </summary>
         protected override void OnShown(EventArgs e) {
             Log.Write("Main form shown");
             base.OnShown(e);
@@ -85,6 +102,9 @@ namespace OnTopReplica {
             _startupOptions.Apply(this);
         }
 
+        /// <summary>
+        /// Overridden. Disposes managers before the form is closed.
+        /// </summary>
         protected override void OnClosing(CancelEventArgs e) {
             Log.Write("Main form closing");
             base.OnClosing(e);
@@ -93,23 +113,35 @@ namespace OnTopReplica {
             Program.Platform.CloseForm(this);
         }
 
+        /// <summary>
+        /// Overridden.
+        /// </summary>
         protected override void OnClosed(EventArgs e) {
             Log.Write("Main form closed");
             base.OnClosed(e);
         }
 
+        /// <summary>
+        /// Overridden. Adjusts side panels when the form is moved.
+        /// </summary>
         protected override void OnMove(EventArgs e) {
             base.OnMove(e);
 
             AdjustSidePanelLocation();
         }
 
+        /// <summary>
+        /// Overridden. Refreshes screen lock after resizing has ended.
+        /// </summary>
         protected override void OnResizeEnd(EventArgs e) {
             base.OnResizeEnd(e);
 
             RefreshScreenLock();
         }
 
+        /// <summary>
+        /// Overridden. Updates the aspect ratio while resizing.
+        /// </summary>
         protected override void OnResizing(EventArgs e) {
             //Update aspect ratio from thumbnail while resizing (but do not refresh, resizing does that anyway)
             if (_thumbnailPanel.IsShowingThumbnail) {
@@ -117,6 +149,9 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Overridden. Deactivates click-through when the form is activated.
+        /// </summary>
         protected override void OnActivated(EventArgs e) {
             base.OnActivated(e);
 
@@ -128,6 +163,9 @@ namespace OnTopReplica {
             Program.Platform.RestoreForm(this);
         }
 
+        /// <summary>
+        /// Overridden. Tries to restore the 'always on top' status of the window.
+        /// </summary>
         protected override void OnDeactivate(EventArgs e) {
             base.OnDeactivate(e);
 
@@ -139,6 +177,9 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Overridden. Handles zooming via mouse wheel.
+        /// </summary>
         protected override void OnMouseWheel(MouseEventArgs e) {
             base.OnMouseWheel(e);
 
@@ -154,6 +195,9 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Overridden. Toggles fullscreen on double click.
+        /// </summary>
         protected override void OnMouseDoubleClick(MouseEventArgs e) {
             base.OnMouseDoubleClick(e);
 
@@ -163,6 +207,9 @@ namespace OnTopReplica {
             FullscreenManager.Toggle();
         }
 
+        /// <summary>
+        /// Overridden. Opens the context menu on right click.
+        /// </summary>
         protected override void OnMouseClick(MouseEventArgs e) {
             base.OnMouseClick(e);
 
@@ -174,6 +221,9 @@ namespace OnTopReplica {
 
         private ThumbnailPanel.RegionDrawnHandler _quickRegionDrawingHandler;
 
+        /// <summary>
+        /// Overridden. Main window procedure.
+        /// </summary>
         protected override void WndProc(ref Message m) {
             if (_msgPumpManager != null) {
                 if (_msgPumpManager.PumpMessage(ref m)) {
@@ -241,6 +291,9 @@ namespace OnTopReplica {
 
         #region Keyboard event handling
 
+        /// <summary>
+        /// Overridden. Handles keyboard shortcuts.
+        /// </summary>
         protected override void OnKeyUp(KeyEventArgs e) {
             base.OnKeyUp(e);
 
@@ -394,6 +447,12 @@ namespace OnTopReplica {
             }
         }
 
+        /// <summary>
+        /// Displays a thumbnail error and unsets the thumbnail.
+        /// </summary>
+        /// <param name="ex">Exception that was thrown.</param>
+        /// <param name="suppress">Whether to suppress the error dialog.</param>
+        /// <param name="title">Title of the error dialog.</param>
         private void ThumbnailError(Exception ex, bool suppress, string title) {
             if (!suppress) {
                 ShowErrorDialog(title, Strings.ErrorGenericThumbnailHandleError, ex.Message);
@@ -402,7 +461,9 @@ namespace OnTopReplica {
             UnsetThumbnail();
         }
 
-        /// <summary>Automatically sizes the window in order to accomodate the thumbnail p times.</summary>
+        /// <summary>
+        // Automatically sizes the window in order to accomodate the thumbnail p times.
+        /// </summary>
         /// <param name="p">Scale of the thumbnail to consider.</param>
         private void FitToThumbnail(double p) {
             try {

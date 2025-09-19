@@ -11,6 +11,11 @@ namespace OnTopReplica.MessagePumpProcessors {
     /// </summary>
     class WindowKeeper : BaseMessagePumpProcessor {
 
+        /// <summary>
+        /// Processes a Windows message.
+        /// </summary>
+        /// <param name="msg">Message to process.</param>
+        /// <returns>True if the message has been handled and should not be processed further.</returns>
         public override bool Process(ref Message msg) {
             if (Form.CurrentThumbnailWindowHandle != null &&
                 msg.Msg == HookMethods.WM_SHELLHOOKMESSAGE) {
@@ -32,6 +37,9 @@ namespace OnTopReplica.MessagePumpProcessors {
             return false;
         }
 
+        /// <summary>
+        /// Called when the processor is shut down.
+        /// </summary>
         protected override void Shutdown() {
             
         }

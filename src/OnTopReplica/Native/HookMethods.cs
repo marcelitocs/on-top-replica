@@ -23,12 +23,30 @@ namespace OnTopReplica.Native {
         }
 
         const int HSHELL_HIGHBIT = 0x8000;
-        
+
+        /// <summary>
+        /// A top-level, unowned window has been created. The window exists when the shell receives this notification.
+        /// </summary>
         public const int HSHELL_WINDOWCREATED = 1;
+        /// <summary>
+        /// A top-level, unowned window is about to be destroyed. The window is still visible when the shell receives this notification.
+        /// </summary>
         public const int HSHELL_WINDOWDESTROYED = 2;
+        /// <summary>
+        /// The activation has changed to a different top-level, unowned window.
+        /// </summary>
         public const int HSHELL_WINDOWACTIVATED = 4;
+        /// <summary>
+        /// A top-level window is being redrawn.
+        /// </summary>
         public const int HSHELL_REDRAW = 6;
+        /// <summary>
+        /// The active window has changed to a different top-level, unowned window.
+        /// </summary>
         public const int HSHELL_RUDEAPPACTIVATED = (HSHELL_WINDOWACTIVATED | HSHELL_HIGHBIT);
+        /// <summary>
+        /// A top-level window is flashing.
+        /// </summary>
         public const int HSHELL_FLASH = (HSHELL_REDRAW | HSHELL_HIGHBIT);
 
         /// <summary>

@@ -6,8 +6,15 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace OnTopReplica.StartupOptions {
+    /// <summary>
+    /// Abstract base class for type converters that convert a string of four comma-separated values into a specific type.
+    /// </summary>
+    /// <typeparam name="T">The type to convert to.</typeparam>
     abstract class FourValueTypeConverter<T> : TypeConverter {
 
+        /// <summary>
+        /// Overridden. Converts from a string.
+        /// </summary>
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) {
             if (value != null) {
                 var sVal = value.ToString();
@@ -17,14 +24,23 @@ namespace OnTopReplica.StartupOptions {
                 return base.ConvertFrom(context, culture, value);
         }
 
+        /// <summary>
+        /// Overridden. Returns true if the source type is a string.
+        /// </summary>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
             return sourceType == typeof(string);
         }
 
+        /// <summary>
+        /// Overridden. Returns true if the destination type is T.
+        /// </summary>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
             return destinationType == typeof(T);
         }
 
+        /// <summary>
+        /// Overridden. Converts to a string.
+        /// </summary>
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
             if (value != null && destinationType == typeof(T)) {
                 var sVal = value.ToString();
@@ -65,6 +81,14 @@ namespace OnTopReplica.StartupOptions {
             }
         }
 
+        /// <summary>
+        /// Creates the value from the four integer values.
+        /// </summary>
+        /// <param name="v1">The first value.</param>
+        /// <param name="v2">The second value.</param>
+        /// <param name="v3">The third value.</param>
+        /// <param name="v4">The fourth value.</param>
+        /// <returns>The created value.</returns>
         protected abstract T CreateValue(int v1, int v2, int v3, int v4);
 
     }

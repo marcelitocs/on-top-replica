@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace OnTopReplica.Native {
+    /// <summary>
+    /// Virtual key codes.
+    /// </summary>
     enum VirtualKeyState : int {
         VK_LBUTTON = 0x01,
         VK_RBUTTON = 0x02,

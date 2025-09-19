@@ -7,8 +7,14 @@ using System.Windows.Forms;
 
 namespace OnTopReplica {
 
+    /// <summary>
+    /// A text box that raises events when the user confirms or aborts input.
+    /// </summary>
 	class FocusedTextBox : System.Windows.Forms.TextBox {
 
+        /// <summary>
+        /// Overridden.
+        /// </summary>
 		protected override bool IsInputChar(char charCode) {
 			if (charCode == '\n' || charCode == '\r')
 				return true;
@@ -16,6 +22,10 @@ namespace OnTopReplica {
 			return base.IsInputChar(charCode);
 		}
 
+        /// <summary>
+        /// Overridden. Raises the ConfirmInput or AbortInput event when the user presses Enter or Escape.
+        /// </summary>
+        /// <param name="e">Key event arguments.</param>
 		protected override void OnKeyUp(KeyEventArgs e) {
 			if (e.KeyCode == Keys.Return) {
                 if(!string.IsNullOrEmpty(Text))
@@ -39,6 +49,9 @@ namespace OnTopReplica {
             (char)27, (char)13
         };
 
+        /// <summary>
+        /// Overridden.
+        /// </summary>
         protected override void OnKeyPress(KeyPressEventArgs e) {
             if (IgnoreChars.Contains(e.KeyChar)) {
                 e.Handled = true;
@@ -47,16 +60,28 @@ namespace OnTopReplica {
             base.OnKeyPress(e);
         }
 
+        /// <summary>
+        /// Fired when the user confirms input by pressing Enter.
+        /// </summary>
 		public event EventHandler ConfirmInput;
 
+        /// <summary>
+        /// Raises the ConfirmInput event.
+        /// </summary>
 		protected virtual void OnConfirmInput() {
             var evt = ConfirmInput;
             if (evt != null)
                 evt(this, EventArgs.Empty);
 		}
 
+        /// <summary>
+        /// Fired when the user aborts input by pressing Escape.
+        /// </summary>
         public event EventHandler AbortInput;
 
+        /// <summary>
+        /// Raises the AbortInput event.
+        /// </summary>
         protected virtual void OnAbortInput() {
             var evt = AbortInput;
             if (evt != null)

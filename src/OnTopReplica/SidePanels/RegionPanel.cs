@@ -5,8 +5,14 @@ using OnTopReplica.Properties;
 
 namespace OnTopReplica.SidePanels {
 
+    /// <summary>
+    /// Region selection side panel.
+    /// </summary>
 	partial class RegionPanel : SidePanel {
 
+        /// <summary>
+        /// Creates a new instance of the region panel.
+        /// </summary>
 		public RegionPanel() {
 			InitializeComponent();
 
@@ -83,6 +89,9 @@ namespace OnTopReplica.SidePanels {
             }
         }
 
+        /// <summary>
+        /// Gets the title of the panel.
+        /// </summary>
         public override string Title {
             get {
                 return Strings.MenuRegion;
@@ -91,6 +100,10 @@ namespace OnTopReplica.SidePanels {
 
         ThumbnailPanel.RegionDrawnHandler _regionDrawnHandler;
 
+        /// <summary>
+        /// Overridden. Enables region drawing mode when the panel is first shown.
+        /// </summary>
+        /// <param name="form">The main form.</param>
         public override void OnFirstShown(MainForm form) {
             base.OnFirstShown(form);
 
@@ -104,6 +117,10 @@ namespace OnTopReplica.SidePanels {
             form.ThumbnailPanel.RegionDrawn += _regionDrawnHandler;
         }
 
+        /// <summary>
+        /// Overridden. Disables region drawing mode when the panel is closing.
+        /// </summary>
+        /// <param name="form">The main form.</param>
         public override void OnClosing(MainForm form) {
             base.OnClosing(form);
             

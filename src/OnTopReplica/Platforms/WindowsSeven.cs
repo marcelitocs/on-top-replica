@@ -5,6 +5,9 @@ using WindowsFormsAero.Dwm;
 
 namespace OnTopReplica.Platforms {
 
+    /// <summary>
+    /// Platform support for Windows 7.
+    /// </summary>
     class WindowsSeven : WindowsVista {
 
         private double? PreviousOpacity { get; set; }
