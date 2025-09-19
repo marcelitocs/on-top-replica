@@ -90,6 +90,10 @@
             this.switchToWindowToolStripMenuItem,
             this.selectRegionToolStripMenuItem,
             this.advancedToolStripMenuItem,
+            this.loadScenarioToolStripMenuItem,
+            this.saveScenarioToolStripMenuItem,
+            this.manageScenariosToolStripMenuItem,
+            this.toolStripSeparator4,
             this.menuContextOpacity,
             this.resizeToolStripMenuItem,
             this.dockToolStripMenuItem,
@@ -158,6 +162,39 @@
             this.advancedToolStripMenuItem.Text = global::OnTopReplica.Strings.MenuAdvanced;
             this.advancedToolStripMenuItem.DropDownOpening += new System.EventHandler(this.Menu_Advanced_opening);
             // 
+            // saveScenarioToolStripMenuItem
+            //
+            this.saveScenarioToolStripMenuItem.Name = "saveScenarioToolStripMenuItem";
+            this.saveScenarioToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.saveScenarioToolStripMenuItem.Text = "Save scenario...";
+            this.saveScenarioToolStripMenuItem.Click += new System.EventHandler(this.Menu_SaveScenario_click);
+            //
+            // manageScenariosToolStripMenuItem
+            //
+            this.manageScenariosToolStripMenuItem.Name = "manageScenariosToolStripMenuItem";
+            this.manageScenariosToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.manageScenariosToolStripMenuItem.Text = "Manage scenarios...";
+            this.manageScenariosToolStripMenuItem.Click += new System.EventHandler(this.Menu_ManageScenarios_click);
+            //
+            // loadScenarioToolStripMenuItem
+            //
+            this.loadScenarioToolStripMenuItem.DropDown = this.menuScenarios;
+            this.loadScenarioToolStripMenuItem.Name = "loadScenarioToolStripMenuItem";
+            this.loadScenarioToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.loadScenarioToolStripMenuItem.Text = "Load scenario";
+            this.loadScenarioToolStripMenuItem.DropDownOpening += new System.EventHandler(this.Menu_LoadScenario_DropDownOpening);
+            //
+            // menuScenarios
+            //
+            this.menuScenarios.Name = "menuScenarios";
+            this.menuScenarios.OwnerItem = this.loadScenarioToolStripMenuItem;
+            this.menuScenarios.Size = new System.Drawing.Size(61, 4);
+            //
+            // toolStripSeparator4
+            //
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(183, 6);
+            //
             // clickForwardingToolStripMenuItem
             // 
             this.clickForwardingToolStripMenuItem.Image = global::OnTopReplica.Properties.Resources.clickforwarding;
@@ -596,6 +633,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuModeStandardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuModeFullscreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuModeAllScreensToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveScenarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadScenarioToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip menuScenarios;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem manageScenariosToolStripMenuItem;
     }
 }
 
